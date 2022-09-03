@@ -178,6 +178,7 @@ var Layout = function Layout(props) {
             return hideHeader;
         };
         props.publics.toggleHeaderState = toggleHeader;
+        props.publics.setAuthed = props.$setAuthed;
     }
 
     var SettingsBtn = React.lazy(function () {
@@ -196,19 +197,23 @@ var Layout = function Layout(props) {
                 { className: 'E_MainNavs',
                     variant: 'permanent',
                     sx: function sx(theme) {
-                        return Object.assign({
+                        return {
                             display: { xs: 'none', sm: 'block' },
                             '& .MuiDrawer-paper': { boxSizing: 'border-box' },
                             transition: theme.transitions.create('width', {
                                 easing: theme.transitions.easing.sharp,
                                 duration: theme.transitions.duration.leavingScreen
                             })
-                        }, mainNavsOpen ? {} : _defineProperty({
-                            display: 'block',
-                            width: 'calc(' + theme.spacing(7) + ' + 1px)'
-                        }, theme.breakpoints.up('sm'), {
-                            width: 'calc(' + theme.spacing(8) + ' + 1px)'
-                        }));
+                            // ...(mainNavsOpen ? {
+
+                            // } : {
+                            //     display: 'block',
+                            //     width: `calc(${theme.spacing(7)} + 11px)`,
+                            //     [theme.breakpoints.up('sm')]: {
+                            //         width: `calc(${theme.spacing(8)} + 11px)`,
+                            //     }
+                            // })
+                        };
                     },
                     open: mainNavsOpen
                 },
@@ -224,11 +229,19 @@ var Layout = function Layout(props) {
                             React.createElement(
                                 'div',
                                 null,
-                                React.createElement('img', { src: props.config.logo || 'https://code-push.cn/ico.png' }),
-                                React.createElement(
-                                    'h1',
+                                props.config.eleTitle ? React.createElement(
+                                    Suspense,
                                     null,
-                                    props.config.title === undefined ? 'Amanda Admin' : props.config.title
+                                    React.createElement(props.config.eleTitle, Object.assign({}, props, { mainNavsOpen: mainNavsOpen }))
+                                ) : React.createElement(
+                                    React.Fragment,
+                                    null,
+                                    React.createElement('img', { src: props.config.logo || 'https://code-push.cn/ico.png' }),
+                                    React.createElement(
+                                        'h1',
+                                        null,
+                                        props.config.title === undefined ? 'Amanda Admin' : props.config.title
+                                    )
                                 )
                             )
                         ),
@@ -355,7 +368,7 @@ var Layout = function Layout(props) {
                                 React.createElement(
                                     Suspense,
                                     { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, setAuthed: props.setAuthed })
+                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, $setAuthed: props.$setAuthed })
                                 )
                             )
                         )
@@ -413,7 +426,7 @@ var Layout = function Layout(props) {
                                 React.createElement(
                                     Suspense,
                                     { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, setAuthed: props.setAuthed, edge: false })
+                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, $setAuthed: props.$setAuthed, edge: false })
                                 )
                             )
                         )

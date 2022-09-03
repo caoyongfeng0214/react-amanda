@@ -39,7 +39,7 @@ var Login = function Login(props) {
             React.createElement(
                 'div',
                 { className: 'loginHeader' },
-                React.createElement('img', { className: 'loginLogo', src: props.logo || 'https://code-push.cn/ico.png' }),
+                React.createElement('img', { className: 'loginLogo', src: props.config.logo || 'https://code-push.cn/ico.png' }),
                 props.config.title === undefined ? 'React Amanda Admin' : props.config.title,
                 React.createElement(
                     'span',
@@ -61,7 +61,7 @@ var Login = function Login(props) {
                                     if (success) {
                                         setClosing(true);
                                         setTimeout(function () {
-                                            props.setAuthed(true);
+                                            props.$setAuthed(true);
                                         }, 500);
                                     } else {
                                         // refUName.current.focus();

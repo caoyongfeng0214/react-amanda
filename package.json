@@ -1,6 +1,6 @@
 {
     "name": "react-amanda",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A base-architecture and some components for React",
     "main": "index.js",
     "scripts": {
@@ -27,6 +27,6 @@
         "@emotion/styled": "^11.10.0",
         "@mui/material": "^5.10.2",
         "@mui/icons-material": "^5.10.2",
-        "react-admin-easy-core": "^1.0.2"
+        "react-admin-easy-core": "^1.0.8"
     }
 }

@@ -18,12 +18,18 @@ var toggleHeaderState = function toggleHeaderState() {
     }
 };
 
-export { getHeaderState, toggleHeaderState, Targets, ELink, useENavigate, NotFound };
+var setAuthed = function setAuthed(authed) {
+    if (PUBLICs.setAuthed) {
+        PUBLICs.setAuthed(authed);
+    }
+};
+
+export { getHeaderState, toggleHeaderState, setAuthed, Targets, ELink, useENavigate, NotFound };
 
 var Admin = function Admin(props) {
     var config = props.config || {};
 
-    config.loginPage = React.lazy(function () {
+    config.loginPage = config.login && config.login.page || React.lazy(function () {
         return import('./login');
     });
     config.layoutPage = React.lazy(function () {

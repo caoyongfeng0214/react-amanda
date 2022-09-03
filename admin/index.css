@@ -48,8 +48,7 @@ html, body {
   position: static;
   background-color: #f9fafb;
   border-right: none;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 /* .E_MainNavs > div > header {
@@ -60,6 +59,7 @@ html, body {
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   flex-grow: 1;
   flex-shrink: 1;
+  overflow: auto;
 }
 
 .E_MainNavsBox .Mui-selected > .MuiListItemIcon-root{
@@ -86,6 +86,15 @@ html, body {
   color: #000 !important;
 }
 
+.E_MainNavClosed .E_MainNavs,
+.E_MainNavClosed .E_MainNavsBox > ul {
+  width: calc(5rem + 1px);
+}
+
+.E_MainNavClosed .E_MainNavsBox {
+  overflow-x: hidden;
+}
+
 .E_MainNavClosed .E_MainNavsBox > ul > li > div:first-child {
   justify-content: center;
   padding-top: 0;
@@ -107,6 +116,9 @@ html, body {
 .E_MainNavClosed .E_MainNavsBox > ul > li > div:first-child > .MuiListItemIcon-root {
   margin-right: auto;
   width: 100%;
+}
+
+.E_MainNavClosed .E_MainNavsBox > ul > li > div:first-child > .MuiListItemIcon-root > svg {
   transform: scale(1.5);
 }
 
@@ -116,6 +128,7 @@ html, body {
 
 .E_MainNavClosed .E_MainNavsBox > ul > li > div:first-child > .MuiListItemText-root {
   opacity: 0;
+  display: none;
 }
 
 .E_MainNavsChildItem {
@@ -202,6 +215,7 @@ html, body {
   align-items: center;
   flex-wrap: nowrap;
   overflow: hidden;
+  padding-left: 0.25rem;
 }
 
 .E_MainNavsHeaderToggleBox > div:first-child > div > img {
@@ -212,8 +226,9 @@ html, body {
 .E_MainNavsHeaderToggleBox > div:first-child > div > h1 {
   font-size: 1.2rem;
   padding: 0;
-  margin: 0;
+  margin: 0 0 0 0.5rem;
   color: #25ff00;
+  word-break: keep-all;
 }
 
 .E_MainNavsHeaderToggleBox > div:last-child {

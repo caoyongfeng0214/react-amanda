@@ -118,7 +118,7 @@ var SettingsBtn = function SettingsBtn(props) {
                         if (props.logoutHandler) {
                             props.logoutHandler(function (success) {
                                 if (success) {
-                                    props.setAuthed(false);
+                                    props.$setAuthed(false);
                                 }
                             });
                         }
