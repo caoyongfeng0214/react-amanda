@@ -26,10 +26,12 @@ import Collapse from '@mui/material/Collapse';
 import Chip from '@mui/material/Chip';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 
 import { Targets, NotFound } from "react-admin-easy-core";
 
 import DialogTab from './dialogTab';
+import TabFooter from "./tabFooter";
 
 var DataKey = '__react_amanda_admin__';
 var SavedData = localStorage.getItem(DataKey);
@@ -96,7 +98,8 @@ var RightTabHeader = function RightTabHeader(_ref2) {
                         return closeRightTab(tab);
                     } },
                 React.createElement(CloseIcon, { fontSize: '40' })
-            )
+            ),
+            React.createElement(Divider, { orientation: 'vertical', flexItem: true })
         ),
         React.createElement(
             'div',
@@ -439,18 +442,23 @@ var Layout = function Layout(props) {
                                 'div',
                                 { key: T.route.url, className: 'E_MainTabContentItem' + (I == props.activeMainTabIdx ? ' E_MainTabContentActive' : '') },
                                 React.createElement(
-                                    NotFound,
-                                    { route: T.route },
+                                    'div',
+                                    null,
                                     React.createElement(
-                                        Suspense,
-                                        { fallback: React.createElement(
-                                                'div',
-                                                null,
-                                                'Loading.....'
-                                            ) },
-                                        T.ele
+                                        NotFound,
+                                        { route: T.route },
+                                        React.createElement(
+                                            Suspense,
+                                            { fallback: React.createElement(
+                                                    'div',
+                                                    null,
+                                                    'Loading.....'
+                                                ) },
+                                            T.ele
+                                        )
                                     )
-                                )
+                                ),
+                                React.createElement(TabFooter, { tab: T })
                             );
                         })
                     )
@@ -487,18 +495,23 @@ var Layout = function Layout(props) {
                         'div',
                         null,
                         React.createElement(
-                            NotFound,
-                            { route: T.route },
+                            'div',
+                            null,
                             React.createElement(
-                                Suspense,
-                                { fallback: React.createElement(
-                                        'div',
-                                        null,
-                                        'Loading.....'
-                                    ) },
-                                T.ele
+                                NotFound,
+                                { route: T.route },
+                                React.createElement(
+                                    Suspense,
+                                    { fallback: React.createElement(
+                                            'div',
+                                            null,
+                                            'Loading.....'
+                                        ) },
+                                    T.ele
+                                )
                             )
-                        )
+                        ),
+                        React.createElement(TabFooter, { tab: T })
                     )
                 ),
                 React.createElement('div', null)

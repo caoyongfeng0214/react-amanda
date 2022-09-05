@@ -15,6 +15,8 @@ import Slide from '@mui/material/Slide';
 
 import { NotFound } from 'react-admin-easy-core';
 
+import TabFooter from './tabFooter';
+
 var Transition = React.forwardRef(function Transition(props, ref) {
     return React.createElement(Slide, Object.assign({ direction: 'down', ref: ref }, props));
 });
@@ -122,7 +124,8 @@ var DialogTab = function DialogTab(props) {
                         props.tab.ele
                     )
                 )
-            )
+            ),
+            React.createElement(TabFooter, { tab: props.tab })
         )
     );
 };

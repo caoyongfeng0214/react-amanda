@@ -229,6 +229,7 @@ html, body {
   margin: 0 0 0 0.5rem;
   color: #25ff00;
   word-break: keep-all;
+  white-space: nowrap;
 }
 
 .E_MainNavsHeaderToggleBox > div:last-child {
@@ -350,13 +351,19 @@ html, body {
   right: 0;
   top: 0;
   bottom: 0;
-  padding: 0.8rem;
   overflow: auto;
   display: none;
 }
 
 .E_MainTabContentItem.E_MainTabContentActive {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+.E_MainTabContentItem > div:first-child {
+  padding: 0.8rem;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .E_RightDrawer .MuiDrawer-paper {
@@ -403,9 +410,14 @@ html, body {
   padding-right: 8px !important;
 }
 
+.E_RightTabHeader > div:first-child {
+  display: flex;
+}
+
 .E_RightTabHeader > div:nth-child(2) {
   flex-grow: 1;
   flex-shrink: 1;
+  padding-left: 0.5rem;
 }
 
 .E_RightTabHeader > div:last-child > button:not(:first-child) {
@@ -430,8 +442,15 @@ html, body {
   right: 0;
   top: 0;
   bottom: 0;
-  padding: 8px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.E_RightDrawerContent > div > div:first-child {
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0.5rem;
 }
 
 .E_DialogTab .MuiDialog-paper {
@@ -506,7 +525,32 @@ html, body {
 } */
 
 .E_DialogTabContent {
-  padding: 1rem;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.E_DialogTabContent > div:first-child {
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0.8rem;
+}
+
+.E_Pg {
+  position: sticky;
+  bottom: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: #f8f8f8 !important;
+  border-top: 1px solid #eee;
+}
+
+.E_PgBar {
+  position: static !important;
+  background-color: transparent !important;
+}
+.E_PgBar > div {
+  justify-content: center;
 }
 
 
