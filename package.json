@@ -27,6 +27,6 @@
         "@emotion/styled": "^11.10.0",
         "@mui/material": "^5.10.2",
         "@mui/icons-material": "^5.10.2",
-        "react-admin-easy-core": "^1.0.11"
+        "react-admin-easy-core": "^1.0.12"
     }
 }
