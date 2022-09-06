@@ -187,6 +187,9 @@ var Layout = function Layout(props) {
     var SettingsBtn = React.lazy(function () {
         return import('./settingsBtn');
     });
+    var HeaderMenus = props.config.eleHeader || React.lazy(function () {
+        return import('./headerMenus');
+    });
 
     return React.createElement(
         React.Fragment,
@@ -371,6 +374,16 @@ var Layout = function Layout(props) {
                                 React.createElement(
                                     Suspense,
                                     { fallback: React.createElement('span', null) },
+                                    React.createElement(HeaderMenus, { header: props.config.header })
+                                )
+                            ),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(Divider, { orientation: 'vertical', flexItem: true }),
+                                React.createElement(
+                                    Suspense,
+                                    { fallback: React.createElement('span', null) },
                                     React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, $setAuthed: props.$setAuthed })
                                 )
                             )
@@ -429,7 +442,7 @@ var Layout = function Layout(props) {
                                 React.createElement(
                                     Suspense,
                                     { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, $setAuthed: props.$setAuthed, edge: false })
+                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, hideHeader: hideHeader, header: props.config.header, $setAuthed: props.$setAuthed, edge: false })
                                 )
                             )
                         )

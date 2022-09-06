@@ -10,6 +10,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 
 import Logout from '@mui/icons-material/Logout';
+import CodeIcon from '@mui/icons-material/Code';
 
 // import EIcon from "./eIcon";
 
@@ -31,6 +32,37 @@ var SettingsBtn = function SettingsBtn(props) {
 
     var handleClose = function handleClose() {
         setAnchorEl(null);
+    };
+
+    var genItem = function genItem(T, I) {
+        return T === 'divider' ? React.createElement(Divider, { key: I }) : React.createElement(
+            MenuItem,
+            { key: I, onClick: function onClick() {
+                    setTimeout(function () {
+                        if (T.fn) {
+                            T.fn();
+                        } else if (T.url) {
+                            var target = T.target || Targets._dialog,
+                                auto = T.auto || false;
+                            enavigate.to(T.url, {
+                                target: target,
+                                auto: auto,
+                                size: T.size
+                            });
+                        }
+                    }, 300);
+                } },
+            React.createElement(
+                ListItemIcon,
+                null,
+                T.icon && React.createElement(
+                    Suspense,
+                    { fallback: React.createElement('span', null) },
+                    React.createElement(T.icon, { fontSize: 'small' })
+                )
+            ),
+            T.title
+        );
     };
 
     return React.createElement(
@@ -81,6 +113,10 @@ var SettingsBtn = function SettingsBtn(props) {
                 transformOrigin: { horizontal: 'right', vertical: 'top' },
                 anchorOrigin: { horizontal: 'right', vertical: 'bottom' }
             },
+            props.hideHeader && props.header && props.header.items && props.header.items.map(function (T, I) {
+                return genItem(T, I);
+            }),
+            props.hideHeader && props.header && props.header.items && React.createElement(Divider, null),
             props.moreMenus && props.moreMenus.map(function (T, I) {
                 return T === 'divider' ? React.createElement(Divider, { key: I }) : React.createElement(
                     MenuItem,
@@ -90,7 +126,7 @@ var SettingsBtn = function SettingsBtn(props) {
                                     T.fn();
                                 } else if (T.url) {
                                     var target = T.target || Targets._dialog,
-                                        auto = T.auto || 1;
+                                        auto = T.auto || false;
                                     enavigate.to(T.url, {
                                         target: target,
                                         auto: auto,
@@ -111,7 +147,22 @@ var SettingsBtn = function SettingsBtn(props) {
                     T.title
                 );
             }),
-            React.createElement(Divider, null),
+            props.moreMenus && React.createElement(Divider, null),
+            React.createElement(
+                MenuItem,
+                { component: 'a', href: 'https://github.com/caoyongfeng0214/react-amanda', target: '_blank' },
+                React.createElement(
+                    ListItemIcon,
+                    null,
+                    React.createElement(CodeIcon, { fontSize: 'small' })
+                ),
+                'Powered by\xA0',
+                React.createElement(
+                    'span',
+                    { style: { color: "#d60101" } },
+                    'Amanda'
+                )
+            ),
             React.createElement(
                 MenuItem,
                 { onClick: function onClick() {

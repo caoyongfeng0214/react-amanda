@@ -276,13 +276,20 @@ html, body {
 }
 
 .E_MainHeaderBox > div:first-child {
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.E_MainHeaderBox > div:nth-child(2) {
   flex-grow: 1;
   flex-shrink: 1;
+  overflow: hidden;
 }
 
 .E_MainHeaderBox > div:last-child {
   flex-grow: 0;
   flex-shrink: 0;
+  display: flex;
 }
 
 .E_MainContainer {
