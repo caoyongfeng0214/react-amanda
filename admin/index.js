@@ -2,7 +2,7 @@ import React from "react";
 
 import './index.css';
 
-import EasyCore, { Targets, ELink, useENavigate, NotFound } from "react-admin-easy-core";
+import EasyCore, { Targets, ELink, useENavigate, NotFound, Dialog } from "react-admin-easy-core";
 
 var PUBLICs = {};
 
@@ -24,7 +24,7 @@ var setAuthed = function setAuthed(authed) {
     }
 };
 
-export { getHeaderState, toggleHeaderState, setAuthed, Targets, ELink, useENavigate, NotFound };
+export { getHeaderState, toggleHeaderState, setAuthed, Targets, ELink, useENavigate, NotFound, Dialog };
 
 var Admin = function Admin(props) {
     var config = props.config || {};
@@ -43,3 +43,14 @@ var Admin = function Admin(props) {
 };
 
 export default Admin;
+
+(function () {
+    var metaPowerName = 'powered-by',
+        metaPower = document.head.querySelector('meta[name="' + metaPowerName + '"]');
+    if (!metaPower) {
+        metaPower = document.createElement('meta');
+        metaPower.setAttribute('name', metaPowerName);
+        document.head.appendChild(metaPower);
+    }
+    metaPower.setAttribute('content', 'caoyongfeng0214@gmail.com <https://github.com/caoyongfeng0214/react-amanda>');
+})();

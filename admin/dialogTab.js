@@ -74,13 +74,17 @@ var DialogTabHeader = function DialogTabHeader(_ref) {
                 React.createElement(
                     'span',
                     null,
-                    React.createElement(Divider, { orientation: 'vertical', flexItem: true }),
-                    React.createElement(
-                        IconButton,
-                        { variant: 'contained', color: 'inherit', size: 'large', className: 'E_DialogTabHeaderClose', onClick: function onClick() {
-                                return close(tab);
-                            } },
-                        React.createElement(CloseIcon, { fontSize: '40' })
+                    !tab.hideClose && React.createElement(
+                        React.Fragment,
+                        null,
+                        React.createElement(Divider, { orientation: 'vertical', flexItem: true }),
+                        React.createElement(
+                            IconButton,
+                            { variant: 'contained', color: 'inherit', size: 'large', className: 'E_DialogTabHeaderClose', onClick: function onClick() {
+                                    return close(tab);
+                                } },
+                            React.createElement(CloseIcon, { fontSize: '40' })
+                        )
                     )
                 )
             )
@@ -99,7 +103,7 @@ var DialogTab = function DialogTab(props) {
             transitionDuration: 400,
             open: props.open,
             onClose: function onClose() {
-                if (props.tab.route.searchParams.__auto__) {
+                if (props.tab.route && props.tab.route.searchParams.__auto__) {
                     props.close();
                 }
             }

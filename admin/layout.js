@@ -114,10 +114,10 @@ var RightTabHeader = function RightTabHeader(_ref2) {
                     Button,
                     { variant: 'contained', key: I, color: T.color || 'error',
                         ref: function ref(domEle) {
-                            if (!tab.btns) {
-                                tab.btns = [];
+                            if (I == 0) {
+                                tab._btns = [];
                             }
-                            tab.btns.push(domEle);
+                            tab._btns.push(domEle);
                         },
                         onClick: function onClick(e) {
                             if (T.fn) {
@@ -132,6 +132,10 @@ var RightTabHeader = function RightTabHeader(_ref2) {
         )
     );
 };
+
+var SettingsBtn = React.lazy(function () {
+    return import('./settingsBtn');
+});
 
 var Layout = function Layout(props) {
     var _useState5 = useState(SavedData.mainNavsOpen === false ? false : true),
@@ -184,9 +188,6 @@ var Layout = function Layout(props) {
         props.publics.setAuthed = props.$setAuthed;
     }
 
-    var SettingsBtn = React.lazy(function () {
-        return import('./settingsBtn');
-    });
     var HeaderMenus = props.config.eleHeader || React.lazy(function () {
         return import('./headerMenus');
     });
@@ -203,23 +204,20 @@ var Layout = function Layout(props) {
                 { className: 'E_MainNavs',
                     variant: 'permanent',
                     sx: function sx(theme) {
-                        return {
-                            display: { xs: 'none', sm: 'block' },
+                        // let displayXs = 'block';
+                        // if(!mainNavsOpen) {
+                        //     displayXs = 'none';
+                        // }
+                        return Object.assign({
+                            // display: { xs: displayXs, sm: 'block' },
                             '& .MuiDrawer-paper': { boxSizing: 'border-box' },
                             transition: theme.transitions.create('width', {
                                 easing: theme.transitions.easing.sharp,
                                 duration: theme.transitions.duration.leavingScreen
                             })
-                            // ...(mainNavsOpen ? {
-
-                            // } : {
-                            //     display: 'block',
-                            //     width: `calc(${theme.spacing(7)} + 11px)`,
-                            //     [theme.breakpoints.up('sm')]: {
-                            //         width: `calc(${theme.spacing(8)} + 11px)`,
-                            //     }
-                            // })
-                        };
+                        }, mainNavsOpen ? {} : {
+                            width: { xs: '0 !important', sm: 'calc(5rem + 1px) !important' }
+                        });
                     },
                     open: mainNavsOpen
                 },
@@ -367,7 +365,21 @@ var Layout = function Layout(props) {
                         React.createElement(
                             Toolbar,
                             { variant: 'dense', className: 'E_MainHeaderBox' },
-                            React.createElement('div', null),
+                            React.createElement(
+                                'div',
+                                null,
+                                React.createElement(
+                                    IconButton,
+                                    { size: 'large', edge: 'start', color: 'inherit', 'aria-label': 'menu',
+                                        sx: function sx() {
+                                            return {
+                                                display: { xs: mainNavsOpen ? 'none' : 'inline-flex', sm: 'none' }
+                                            };
+                                        },
+                                        onClick: toggleMainNavs },
+                                    mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
+                                )
+                            ),
                             React.createElement(
                                 'div',
                                 null,
@@ -384,7 +396,7 @@ var Layout = function Layout(props) {
                                 React.createElement(
                                     Suspense,
                                     { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, $setAuthed: props.$setAuthed })
+                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, logoutTxt: props.config.logoutTxt, $setAuthed: props.$setAuthed })
                                 )
                             )
                         )
@@ -399,6 +411,26 @@ var Layout = function Layout(props) {
                         React.createElement(
                             'div',
                             { className: 'E_MainTabsBox' },
+                            React.createElement(
+                                'div',
+                                { className: 'E_MainTabsMainNavsToggle' },
+                                hideHeader && React.createElement(
+                                    React.Fragment,
+                                    null,
+                                    React.createElement(
+                                        IconButton,
+                                        { size: 'large', color: 'inherit', 'aria-label': 'menu',
+                                            sx: function sx() {
+                                                return {
+                                                    display: { xs: mainNavsOpen ? 'none' : 'inline-flex', sm: 'none' }
+                                                };
+                                            },
+                                            onClick: toggleMainNavs },
+                                        mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
+                                    ),
+                                    React.createElement(Divider, { orientation: 'vertical', variant: 'middle', flexItem: true })
+                                )
+                            ),
                             React.createElement(
                                 Tabs,
                                 { value: props.activeMainTabIdx
@@ -442,7 +474,7 @@ var Layout = function Layout(props) {
                                 React.createElement(
                                     Suspense,
                                     { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, hideHeader: hideHeader, header: props.config.header, $setAuthed: props.$setAuthed, edge: false })
+                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, logoutTxt: props.config.logoutTxt, hideHeader: hideHeader, header: props.config.header, $setAuthed: props.$setAuthed, edge: false })
                                 )
                             )
                         )

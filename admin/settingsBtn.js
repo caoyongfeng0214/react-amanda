@@ -179,7 +179,7 @@ var SettingsBtn = function SettingsBtn(props) {
                     null,
                     React.createElement(Logout, { fontSize: 'small' })
                 ),
-                'Logout'
+                props.logoutTxt || 'Logout'
             )
         )
     );

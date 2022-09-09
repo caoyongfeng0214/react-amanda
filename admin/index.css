@@ -315,9 +315,18 @@ html, body {
   display: flex;
 }
 
-.E_MainTabsBox > div:first-child {
+.E_MainTabsBox > div:nth-child(2) {
   flex-grow: 1;
   flex-shrink: 1;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media (min-width: 600px) {
+  .E_MainTabsBox > div:nth-child(2) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .E_MainTabItem {
@@ -334,6 +343,7 @@ html, body {
   margin-left: 0.3rem !important;
 }
 
+.E_MainTabsMainNavsToggle,
 .E_MainTabsSettings {
   flex-grow: 0;
   flex-shrink: 0;
