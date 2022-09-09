@@ -138,7 +138,7 @@ var SettingsBtn = React.lazy(function () {
 });
 
 var Layout = function Layout(props) {
-    var _useState5 = useState(SavedData.mainNavsOpen === false ? false : true),
+    var _useState5 = useState(document.body.clientWidth < 600 && !props.oldRoute || SavedData.mainNavsOpen === false ? false : true),
         _useState6 = _slicedToArray(_useState5, 2),
         mainNavsOpen = _useState6[0],
         setMainNavsOpen = _useState6[1];
@@ -173,7 +173,7 @@ var Layout = function Layout(props) {
     var navigate = useNavigate();
 
     var toggleMainNavs = function toggleMainNavs() {
-        setMainNavsOpen(!mainNavsOpen);
+        setMainNavsOpen(!!!mainNavsOpen);
     };
 
     var toggleHeader = function toggleHeader() {
