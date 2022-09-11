@@ -1,6 +1,6 @@
 {
     "name": "react-amanda",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "description": "A base-architecture and some components for React",
     "main": "index.js",
     "scripts": {

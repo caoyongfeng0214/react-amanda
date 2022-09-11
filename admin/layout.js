@@ -2,6 +2,8 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 import React, { useState, useEffect, Suspense } from "react";
 import { useNavigate } from 'react-router-dom';
 
@@ -27,6 +29,8 @@ import Chip from '@mui/material/Chip';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
 
 import { Targets, NotFound } from "react-admin-easy-core";
 
@@ -132,6 +136,18 @@ var RightTabHeader = function RightTabHeader(_ref2) {
         )
     );
 };
+
+var NavTooltip = styled(function (_ref3) {
+    var className = _ref3.className,
+        props = _objectWithoutProperties(_ref3, ['className']);
+
+    return React.createElement(Tooltip, Object.assign({}, props, { classes: { popper: className } }));
+})(function (_ref4) {
+    var theme = _ref4.theme;
+    return _defineProperty({}, '& .' + tooltipClasses.tooltip, {
+        transform: 'translateX(-1rem) scale(1.2) !important'
+    });
+});
 
 var SettingsBtn = React.lazy(function () {
     return import('./settingsBtn');
@@ -290,7 +306,7 @@ var Layout = function Layout(props) {
                                             }
                                         }
                                     },
-                                    React.createElement(
+                                    mainNavsOpen && React.createElement(
                                         ListItemIcon,
                                         null,
                                         T.icon && React.createElement(
@@ -298,6 +314,18 @@ var Layout = function Layout(props) {
                                             { fallback: React.createElement('span', null) },
                                             React.createElement(T.icon, { color: _selected && 'secondary' || '' })
                                         ) || React.createElement(LaunchIcon, { color: _selected && 'secondary' || '' })
+                                    ) || React.createElement(
+                                        NavTooltip,
+                                        { title: T.title, placement: 'right-start', arrow: true },
+                                        React.createElement(
+                                            ListItemIcon,
+                                            null,
+                                            T.icon && React.createElement(
+                                                Suspense,
+                                                { fallback: React.createElement('span', null) },
+                                                React.createElement(T.icon, { color: _selected && 'secondary' || '' })
+                                            ) || React.createElement(LaunchIcon, { color: _selected && 'secondary' || '' })
+                                        )
                                     ),
                                     React.createElement(ListItemText, { primary: T.title,
                                         primaryTypographyProps: _selected && {
@@ -330,7 +358,7 @@ var Layout = function Layout(props) {
                                                     onClick: function onClick() {
                                                         navigate(P.url);
                                                     } },
-                                                React.createElement(
+                                                mainNavsOpen && React.createElement(
                                                     ListItemIcon,
                                                     null,
                                                     P.icon && React.createElement(
@@ -338,6 +366,18 @@ var Layout = function Layout(props) {
                                                         { fallback: React.createElement('span', null) },
                                                         React.createElement(P.icon, { color: _selected2 && 'secondary' || '' })
                                                     ) || React.createElement(LaunchIcon, { color: _selected2 && 'secondary' || '' })
+                                                ) || React.createElement(
+                                                    NavTooltip,
+                                                    { title: P.title, placement: 'right-start', arrow: true },
+                                                    React.createElement(
+                                                        ListItemIcon,
+                                                        null,
+                                                        P.icon && React.createElement(
+                                                            Suspense,
+                                                            { fallback: React.createElement('span', null) },
+                                                            React.createElement(P.icon, { color: _selected2 && 'secondary' || '' })
+                                                        ) || React.createElement(LaunchIcon, { color: _selected2 && 'secondary' || '' })
+                                                    )
                                                 ),
                                                 React.createElement(ListItemText, { primary: P.title,
                                                     primaryTypographyProps: _selected2 && {

@@ -639,3 +639,7 @@ html, body {
 .loginPage.close {
   transform: scale(0);
 }
+
+/* .MuiTooltip-tooltip {
+  transform: translateX(-1rem) scale(1.2) !important
+} */
