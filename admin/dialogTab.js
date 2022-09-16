@@ -15,6 +15,7 @@ import Slide from '@mui/material/Slide';
 
 import { NotFound } from 'react-admin-easy-core';
 
+import ThemeAppbar from "./themeAppbar";
 import TabFooter from './tabFooter';
 
 var Transition = React.forwardRef(function Transition(props, ref) {
@@ -23,7 +24,8 @@ var Transition = React.forwardRef(function Transition(props, ref) {
 
 var DialogTabHeader = function DialogTabHeader(_ref) {
     var tab = _ref.tab,
-        close = _ref.close;
+        close = _ref.close,
+        color = _ref.color;
 
     var _useState = useState(false),
         _useState2 = _slicedToArray(_useState, 2),
@@ -37,8 +39,8 @@ var DialogTabHeader = function DialogTabHeader(_ref) {
     });
 
     return React.createElement(
-        AppBar,
-        { position: 'static' },
+        ThemeAppbar,
+        { position: 'static', color: color },
         React.createElement(
             Toolbar,
             { variant: 'dense', className: 'E_DialogTabHeader' },

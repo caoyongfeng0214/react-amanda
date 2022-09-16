@@ -30,10 +30,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import { styled } from '@mui/material/styles';
+import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { Targets, NotFound } from "react-admin-easy-core";
 
+import ThemeAppbar from "./themeAppbar";
 import DialogTab from './dialogTab';
 import TabFooter from "./tabFooter";
 
@@ -238,8 +239,8 @@ var Layout = function Layout(props) {
                     open: mainNavsOpen
                 },
                 React.createElement(
-                    AppBar,
-                    { position: 'static', className: 'E_MainNavsHeader' },
+                    ThemeAppbar,
+                    { position: 'static', className: 'E_MainNavsHeader', config: props.config },
                     React.createElement(
                         Toolbar,
                         { variant: 'dense', className: 'E_MainNavsHeaderToggleBox' },
@@ -400,8 +401,8 @@ var Layout = function Layout(props) {
                     'div',
                     { className: 'E_MainHeader' },
                     React.createElement(
-                        AppBar,
-                        { position: 'static' },
+                        ThemeAppbar,
+                        { position: 'static', config: props.config },
                         React.createElement(
                             Toolbar,
                             { variant: 'dense', className: 'E_MainHeaderBox' },
@@ -569,8 +570,8 @@ var Layout = function Layout(props) {
                     }
                 },
                 React.createElement(
-                    AppBar,
-                    { position: 'static' },
+                    ThemeAppbar,
+                    { position: 'static', config: props.config },
                     React.createElement(RightTabHeader, { tab: T, closeRightTab: props.closePopTab })
                 ),
                 React.createElement(
@@ -600,7 +601,7 @@ var Layout = function Layout(props) {
                     )
                 ),
                 React.createElement('div', null)
-            ) : React.createElement(DialogTab, { key: T.dt, tab: T, open: !!props.openedPopTabs[T.dt], close: props.closePopTab, hideBackdrop: I != props.popTabs.filter(function (P) {
+            ) : React.createElement(DialogTab, { key: T.dt, tab: T, color: props.config && props.config.color, open: !!props.openedPopTabs[T.dt], close: props.closePopTab, hideBackdrop: I != props.popTabs.filter(function (P) {
                     return P.opened;
                 }).length - 1 });
         })
