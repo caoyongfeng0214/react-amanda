@@ -8,7 +8,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useNavigate } from 'react-router-dom';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
+// import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -31,6 +31,8 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
+// import purple from '@mui/core/colors/purple';
+
 
 import { Targets, NotFound } from "react-admin-easy-core";
 
@@ -154,6 +156,38 @@ var SettingsBtn = React.lazy(function () {
     return import('./settingsBtn');
 });
 
+var Themes = {
+    light: createTheme({
+        palette: {
+            mode: 'light'
+        }
+    }),
+    dark: createTheme({
+        palette: {
+            primary: {
+                main: '#212121'
+            }
+            // divider: '#000'
+        },
+        components: {
+            MuiChip: {
+                styleOverrides: {
+                    colorWarning: {
+                        backgroundColor: '#9a561e'
+                    }
+                }
+            }
+            // ThemeAppbar: {
+            //     styleOverrides: {
+            //         ['& .MuiDivider-root']: {
+            //             borderColor: '#ff0000 !important'
+            //         }
+            //     }
+            // }
+        }
+    })
+};
+
 var Layout = function Layout(props) {
     var _useState5 = useState(document.body.clientWidth < 600 && !props.oldRoute || SavedData.mainNavsOpen === false ? false : true),
         _useState6 = _slicedToArray(_useState5, 2),
@@ -213,112 +247,104 @@ var Layout = function Layout(props) {
         React.Fragment,
         null,
         React.createElement(
-            'div',
-            { className: 'E_Layout' + (mainNavsOpen ? '' : ' E_MainNavClosed') },
-            React.createElement(CssBaseline, null),
+            ThemeProvider,
+            { theme: Themes[props.config.theme || SavedData.theme] || Themes.light },
             React.createElement(
-                Drawer,
-                { className: 'E_MainNavs',
-                    variant: 'permanent',
-                    sx: function sx(theme) {
-                        // let displayXs = 'block';
-                        // if(!mainNavsOpen) {
-                        //     displayXs = 'none';
-                        // }
-                        return Object.assign({
-                            // display: { xs: displayXs, sm: 'block' },
-                            '& .MuiDrawer-paper': { boxSizing: 'border-box' },
-                            transition: theme.transitions.create('width', {
-                                easing: theme.transitions.easing.sharp,
-                                duration: theme.transitions.duration.leavingScreen
-                            })
-                        }, mainNavsOpen ? {} : {
-                            width: { xs: '0 !important', sm: 'calc(5rem + 1px) !important' }
-                        });
-                    },
-                    open: mainNavsOpen
-                },
+                'div',
+                { className: 'E_Layout' + (mainNavsOpen ? '' : ' E_MainNavClosed') },
+                React.createElement(CssBaseline, null),
                 React.createElement(
-                    ThemeAppbar,
-                    { position: 'static', className: 'E_MainNavsHeader', config: props.config },
+                    Drawer,
+                    { className: 'E_MainNavs',
+                        variant: 'permanent',
+                        sx: function sx(theme) {
+                            // let displayXs = 'block';
+                            // if(!mainNavsOpen) {
+                            //     displayXs = 'none';
+                            // }
+                            return Object.assign({
+                                // display: { xs: displayXs, sm: 'block' },
+                                '& .MuiDrawer-paper': { boxSizing: 'border-box' },
+                                transition: theme.transitions.create('width', {
+                                    easing: theme.transitions.easing.sharp,
+                                    duration: theme.transitions.duration.leavingScreen
+                                })
+                            }, mainNavsOpen ? {} : {
+                                width: { xs: '0 !important', sm: 'calc(5rem + 1px) !important' }
+                            });
+                        },
+                        open: mainNavsOpen
+                    },
                     React.createElement(
-                        Toolbar,
-                        { variant: 'dense', className: 'E_MainNavsHeaderToggleBox' },
+                        ThemeAppbar,
+                        { position: 'static', className: 'E_MainNavsHeader', config: props.config },
                         React.createElement(
-                            'div',
-                            null,
+                            Toolbar,
+                            { variant: 'dense', className: 'E_MainNavsHeaderToggleBox' },
                             React.createElement(
                                 'div',
                                 null,
-                                props.config.eleTitle ? React.createElement(
-                                    Suspense,
+                                React.createElement(
+                                    'div',
                                     null,
-                                    React.createElement(props.config.eleTitle, Object.assign({}, props, { mainNavsOpen: mainNavsOpen }))
-                                ) : React.createElement(
-                                    React.Fragment,
-                                    null,
-                                    React.createElement('img', { src: props.config.logo || 'https://code-push.cn/ico.png' }),
-                                    React.createElement(
-                                        'h1',
+                                    props.config.eleTitle ? React.createElement(
+                                        Suspense,
                                         null,
-                                        props.config.title === undefined ? 'Amanda Admin' : props.config.title
+                                        React.createElement(props.config.eleTitle, Object.assign({}, props, { mainNavsOpen: mainNavsOpen }))
+                                    ) : React.createElement(
+                                        React.Fragment,
+                                        null,
+                                        React.createElement('img', { src: props.config.logo || 'https://code-push.cn/ico.png' }),
+                                        React.createElement(
+                                            'h1',
+                                            null,
+                                            props.config.title === undefined ? 'Amanda Admin' : props.config.title
+                                        )
                                     )
                                 )
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            null,
+                            ),
                             React.createElement(
-                                IconButton,
-                                { edge: 'start', color: 'inherit', 'aria-label': 'menu',
-                                    onClick: toggleMainNavs },
-                                mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
+                                'div',
+                                null,
+                                React.createElement(
+                                    IconButton,
+                                    { edge: 'start', color: 'inherit', 'aria-label': 'menu',
+                                        onClick: toggleMainNavs },
+                                    mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
+                                )
                             )
                         )
-                    )
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'E_MainNavsBox' },
+                    ),
                     React.createElement(
-                        List,
-                        null,
-                        mainNavs.map(function (T, I) {
-                            var _selected = I == props.selectedMainNavIdx && props.selectedMainNavChildIdx === -1;
-                            return React.createElement(
-                                ListItem,
-                                { key: I, disablePadding: true },
-                                React.createElement(
-                                    ListItemButton,
-                                    { selected: _selected,
-                                        onClick: function onClick() {
-                                            if (T.childs) {
-                                                if (!mainNavsOpen || !T.url) {
-                                                    setOpenedMainNavs(Object.assign({}, openedMainNavs, _defineProperty({}, I + '', !openedMainNavs[I])));
-                                                } else {
-                                                    if (!openedMainNavs[I]) {
-                                                        setOpenedMainNavs(Object.assign({}, openedMainNavs, _defineProperty({}, I + '', true)));
+                        'div',
+                        { className: 'E_MainNavsBox' },
+                        React.createElement(
+                            List,
+                            null,
+                            mainNavs.map(function (T, I) {
+                                var _selected = I == props.selectedMainNavIdx && props.selectedMainNavChildIdx === -1;
+                                return React.createElement(
+                                    ListItem,
+                                    { key: I, disablePadding: true },
+                                    React.createElement(
+                                        ListItemButton,
+                                        { selected: _selected,
+                                            onClick: function onClick() {
+                                                if (T.childs) {
+                                                    if (!mainNavsOpen || !T.url) {
+                                                        setOpenedMainNavs(Object.assign({}, openedMainNavs, _defineProperty({}, I + '', !openedMainNavs[I])));
+                                                    } else {
+                                                        if (!openedMainNavs[I]) {
+                                                            setOpenedMainNavs(Object.assign({}, openedMainNavs, _defineProperty({}, I + '', true)));
+                                                        }
                                                     }
                                                 }
+                                                if (T.url) {
+                                                    navigate(T.url);
+                                                }
                                             }
-                                            if (T.url) {
-                                                navigate(T.url);
-                                            }
-                                        }
-                                    },
-                                    mainNavsOpen && React.createElement(
-                                        ListItemIcon,
-                                        null,
-                                        T.icon && React.createElement(
-                                            Suspense,
-                                            { fallback: React.createElement('span', null) },
-                                            React.createElement(T.icon, { color: _selected && 'secondary' || '' })
-                                        ) || React.createElement(LaunchIcon, { color: _selected && 'secondary' || '' })
-                                    ) || React.createElement(
-                                        NavTooltip,
-                                        { title: T.title, placement: 'right-start', arrow: true },
-                                        React.createElement(
+                                        },
+                                        mainNavsOpen && React.createElement(
                                             ListItemIcon,
                                             null,
                                             T.icon && React.createElement(
@@ -326,51 +352,51 @@ var Layout = function Layout(props) {
                                                 { fallback: React.createElement('span', null) },
                                                 React.createElement(T.icon, { color: _selected && 'secondary' || '' })
                                             ) || React.createElement(LaunchIcon, { color: _selected && 'secondary' || '' })
-                                        )
+                                        ) || React.createElement(
+                                            NavTooltip,
+                                            { title: T.title, placement: 'right-start', arrow: true },
+                                            React.createElement(
+                                                ListItemIcon,
+                                                null,
+                                                T.icon && React.createElement(
+                                                    Suspense,
+                                                    { fallback: React.createElement('span', null) },
+                                                    React.createElement(T.icon, { color: _selected && 'secondary' || '' })
+                                                ) || React.createElement(LaunchIcon, { color: _selected && 'secondary' || '' })
+                                            )
+                                        ),
+                                        React.createElement(ListItemText, { primary: T.title,
+                                            primaryTypographyProps: _selected && {
+                                                color: 'secondary',
+                                                fontWeight: 'medium'
+                                            } || {} }),
+                                        T.childs && mainNavsOpen && React.createElement(
+                                            IconButton,
+                                            { edge: 'start', color: 'inherit', fontSize: 'small', onClick: function onClick(e) {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    setOpenedMainNavs(Object.assign({}, openedMainNavs, _defineProperty({}, I + '', !openedMainNavs[I])));
+                                                    return false;
+                                                } },
+                                            openedMainNavs[I] ? React.createElement(ExpandMoreIcon, null) : React.createElement(NavigateNextIcon, null)
+                                        ) || null
                                     ),
-                                    React.createElement(ListItemText, { primary: T.title,
-                                        primaryTypographyProps: _selected && {
-                                            color: 'secondary',
-                                            fontWeight: 'medium'
-                                        } || {} }),
-                                    T.childs && mainNavsOpen && React.createElement(
-                                        IconButton,
-                                        { edge: 'start', color: 'inherit', fontSize: 'small', onClick: function onClick(e) {
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                                setOpenedMainNavs(Object.assign({}, openedMainNavs, _defineProperty({}, I + '', !openedMainNavs[I])));
-                                                return false;
-                                            } },
-                                        openedMainNavs[I] ? React.createElement(ExpandMoreIcon, null) : React.createElement(NavigateNextIcon, null)
-                                    ) || null
-                                ),
-                                T.childs && React.createElement(
-                                    Collapse,
-                                    { 'in': openedMainNavs[I], timeout: 'auto', unmountOnExit: true },
-                                    React.createElement(
-                                        List,
-                                        { component: 'div', disablePadding: true },
-                                        T.childs.map(function (P, J) {
-                                            var _selected2 = I == props.selectedMainNavIdx && J == props.selectedMainNavChildIdx;
-                                            return React.createElement(
-                                                ListItemButton,
-                                                { key: I + '_' + J, className: 'E_MainNavsChildItem',
-                                                    selected: _selected2,
-                                                    onClick: function onClick() {
-                                                        navigate(P.url);
-                                                    } },
-                                                mainNavsOpen && React.createElement(
-                                                    ListItemIcon,
-                                                    null,
-                                                    P.icon && React.createElement(
-                                                        Suspense,
-                                                        { fallback: React.createElement('span', null) },
-                                                        React.createElement(P.icon, { color: _selected2 && 'secondary' || '' })
-                                                    ) || React.createElement(LaunchIcon, { color: _selected2 && 'secondary' || '' })
-                                                ) || React.createElement(
-                                                    NavTooltip,
-                                                    { title: P.title, placement: 'right-start', arrow: true },
-                                                    React.createElement(
+                                    T.childs && React.createElement(
+                                        Collapse,
+                                        { 'in': openedMainNavs[I], timeout: 'auto', unmountOnExit: true },
+                                        React.createElement(
+                                            List,
+                                            { component: 'div', disablePadding: true },
+                                            T.childs.map(function (P, J) {
+                                                var _selected2 = I == props.selectedMainNavIdx && J == props.selectedMainNavChildIdx;
+                                                return React.createElement(
+                                                    ListItemButton,
+                                                    { key: I + '_' + J, className: 'E_MainNavsChildItem',
+                                                        selected: _selected2,
+                                                        onClick: function onClick() {
+                                                            navigate(P.url);
+                                                        } },
+                                                    mainNavsOpen && React.createElement(
                                                         ListItemIcon,
                                                         null,
                                                         P.icon && React.createElement(
@@ -378,89 +404,51 @@ var Layout = function Layout(props) {
                                                             { fallback: React.createElement('span', null) },
                                                             React.createElement(P.icon, { color: _selected2 && 'secondary' || '' })
                                                         ) || React.createElement(LaunchIcon, { color: _selected2 && 'secondary' || '' })
-                                                    )
-                                                ),
-                                                React.createElement(ListItemText, { primary: P.title,
-                                                    primaryTypographyProps: _selected2 && {
-                                                        color: 'secondary',
-                                                        fontWeight: 'medium'
-                                                    } || {} })
-                                            );
-                                        })
+                                                    ) || React.createElement(
+                                                        NavTooltip,
+                                                        { title: P.title, placement: 'right-start', arrow: true },
+                                                        React.createElement(
+                                                            ListItemIcon,
+                                                            null,
+                                                            P.icon && React.createElement(
+                                                                Suspense,
+                                                                { fallback: React.createElement('span', null) },
+                                                                React.createElement(P.icon, { color: _selected2 && 'secondary' || '' })
+                                                            ) || React.createElement(LaunchIcon, { color: _selected2 && 'secondary' || '' })
+                                                        )
+                                                    ),
+                                                    React.createElement(ListItemText, { primary: P.title,
+                                                        primaryTypographyProps: _selected2 && {
+                                                            color: 'secondary',
+                                                            fontWeight: 'medium'
+                                                        } || {} })
+                                                );
+                                            })
+                                        )
                                     )
-                                )
-                            );
-                        })
-                    )
-                )
-            ),
-            React.createElement(
-                'div',
-                { className: 'E_Main' },
-                !hideHeader && React.createElement(
-                    'div',
-                    { className: 'E_MainHeader' },
-                    React.createElement(
-                        ThemeAppbar,
-                        { position: 'static', config: props.config },
-                        React.createElement(
-                            Toolbar,
-                            { variant: 'dense', className: 'E_MainHeaderBox' },
-                            React.createElement(
-                                'div',
-                                null,
-                                React.createElement(
-                                    IconButton,
-                                    { size: 'large', edge: 'start', color: 'inherit', 'aria-label': 'menu',
-                                        sx: function sx() {
-                                            return {
-                                                display: { xs: mainNavsOpen ? 'none' : 'inline-flex', sm: 'none' }
-                                            };
-                                        },
-                                        onClick: toggleMainNavs },
-                                    mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                null,
-                                React.createElement(
-                                    Suspense,
-                                    { fallback: React.createElement('span', null) },
-                                    React.createElement(HeaderMenus, { header: props.config.header })
-                                )
-                            ),
-                            React.createElement(
-                                'div',
-                                null,
-                                React.createElement(Divider, { orientation: 'vertical', flexItem: true }),
-                                React.createElement(
-                                    Suspense,
-                                    { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, logoutTxt: props.config.logoutTxt, $setAuthed: props.$setAuthed })
-                                )
-                            )
+                                );
+                            })
                         )
                     )
                 ),
                 React.createElement(
                     'div',
-                    { className: 'E_MainContainer' },
-                    React.createElement(
+                    { className: 'E_Main' },
+                    !hideHeader && React.createElement(
                         'div',
-                        { className: 'E_MainTabs' },
+                        { className: 'E_MainHeader' },
                         React.createElement(
-                            'div',
-                            { className: 'E_MainTabsBox' },
+                            ThemeAppbar,
+                            { position: 'static', config: props.config },
                             React.createElement(
-                                'div',
-                                { className: 'E_MainTabsMainNavsToggle' },
-                                hideHeader && React.createElement(
-                                    React.Fragment,
+                                Toolbar,
+                                { variant: 'dense', className: 'E_MainHeaderBox' },
+                                React.createElement(
+                                    'div',
                                     null,
                                     React.createElement(
                                         IconButton,
-                                        { size: 'large', color: 'inherit', 'aria-label': 'menu',
+                                        { size: 'large', edge: 'start', color: 'inherit', 'aria-label': 'menu',
                                             sx: function sx() {
                                                 return {
                                                     display: { xs: mainNavsOpen ? 'none' : 'inline-flex', sm: 'none' }
@@ -468,143 +456,193 @@ var Layout = function Layout(props) {
                                             },
                                             onClick: toggleMainNavs },
                                         mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
-                                    ),
-                                    React.createElement(Divider, { orientation: 'vertical', variant: 'middle', flexItem: true })
-                                )
-                            ),
-                            React.createElement(
-                                Tabs,
-                                { value: props.activeMainTabIdx
-                                    // onChange={(e, newVal) => {
-                                    //     setActiveTabIdx(newVal);
-                                    //     console.log(e);
-                                    // }}
-                                    , variant: 'scrollable',
-                                    scrollButtons: true,
-                                    'aria-label': 'visible arrows tabs example',
-                                    sx: _defineProperty({}, '& .' + tabsClasses.scrollButtons, {
-                                        '&.Mui-disabled': { opacity: 0.3 }
-                                    })
-                                },
-
-                                // MainTabs.map((T, I) => <Tab key={T.route.url} className="E_MainTabItem"
-                                //     // label={T.options.title}
-                                //     label={
-                                //         <Chip label={T.options.title} component="span" color={ActiveMainTabIdx == I ? 'warning' : 'default'}
-                                //             onDelete={() => {
-                                //                 removeMainTab(I);
-                                //             }}
-                                //         />
-                                //     }
-                                //     onClick={() => {
-                                //         navigate(T.route.url);
-                                //     }}/>)
-
-                                props.mainTabs.map(function (T, I) {
-                                    return React.createElement(Tab, { key: T.route.url, className: 'E_MainTabItem', component: 'span'
-                                        // label={T.options.title}
-                                        , label: React.createElement(MainTabHeader, { tab: T, idx: I, activeMainTabIdx: props.activeMainTabIdx, closeMainTab: props.closeMainTab }),
-                                        onClick: function onClick() {
-                                            navigate(T.route.url);
-                                        } });
-                                })
-                            ),
-                            hideHeader && React.createElement(
-                                'div',
-                                { className: 'E_MainTabsSettings' },
+                                    )
+                                ),
                                 React.createElement(
-                                    Suspense,
-                                    { fallback: React.createElement('span', null) },
-                                    React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, logoutTxt: props.config.logoutTxt, hideHeader: hideHeader, header: props.config.header, $setAuthed: props.$setAuthed, edge: false })
+                                    'div',
+                                    null,
+                                    React.createElement(
+                                        Suspense,
+                                        { fallback: React.createElement('span', null) },
+                                        React.createElement(HeaderMenus, { header: props.config.header })
+                                    )
+                                ),
+                                React.createElement(
+                                    'div',
+                                    null,
+                                    React.createElement(Divider, { orientation: 'vertical', flexItem: true }),
+                                    React.createElement(
+                                        Suspense,
+                                        { fallback: React.createElement('span', null) },
+                                        React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, logoutTxt: props.config.logoutTxt, $setAuthed: props.$setAuthed })
+                                    )
                                 )
                             )
                         )
                     ),
                     React.createElement(
                         'div',
-                        { className: 'E_MainTabContents' },
-                        props.mainTabs.map(function (T, I) {
-                            return React.createElement(
+                        { className: 'E_MainContainer' },
+                        React.createElement(
+                            'div',
+                            { className: 'E_MainTabs' },
+                            React.createElement(
                                 'div',
-                                { key: T.route.url, className: 'E_MainTabContentItem' + (I == props.activeMainTabIdx ? ' E_MainTabContentActive' : '') },
+                                { className: 'E_MainTabsBox' },
                                 React.createElement(
                                     'div',
-                                    null,
-                                    React.createElement(
-                                        NotFound,
-                                        { route: T.route },
+                                    { className: 'E_MainTabsMainNavsToggle' },
+                                    hideHeader && React.createElement(
+                                        React.Fragment,
+                                        null,
                                         React.createElement(
-                                            Suspense,
-                                            { fallback: React.createElement(
-                                                    'div',
-                                                    null,
-                                                    'Loading.....'
-                                                ) },
-                                            T.ele
-                                        )
+                                            IconButton,
+                                            { size: 'large', color: 'inherit', 'aria-label': 'menu',
+                                                sx: function sx() {
+                                                    return {
+                                                        display: { xs: mainNavsOpen ? 'none' : 'inline-flex', sm: 'none' }
+                                                    };
+                                                },
+                                                onClick: toggleMainNavs },
+                                            mainNavsOpen ? React.createElement(MenuOpenIcon, null) : React.createElement(MenuIcon, null)
+                                        ),
+                                        React.createElement(Divider, { orientation: 'vertical', variant: 'middle', flexItem: true })
                                     )
                                 ),
-                                React.createElement(TabFooter, { tab: T })
-                            );
-                        })
+                                React.createElement(
+                                    Tabs,
+                                    { value: props.activeMainTabIdx
+                                        // onChange={(e, newVal) => {
+                                        //     setActiveTabIdx(newVal);
+                                        //     console.log(e);
+                                        // }}
+                                        , variant: 'scrollable',
+                                        scrollButtons: true,
+                                        'aria-label': 'visible arrows tabs example',
+                                        sx: _defineProperty({}, '& .' + tabsClasses.scrollButtons, {
+                                            '&.Mui-disabled': { opacity: 0.3 }
+                                        })
+                                    },
+
+                                    // MainTabs.map((T, I) => <Tab key={T.route.url} className="E_MainTabItem"
+                                    //     // label={T.options.title}
+                                    //     label={
+                                    //         <Chip label={T.options.title} component="span" color={ActiveMainTabIdx == I ? 'warning' : 'default'}
+                                    //             onDelete={() => {
+                                    //                 removeMainTab(I);
+                                    //             }}
+                                    //         />
+                                    //     }
+                                    //     onClick={() => {
+                                    //         navigate(T.route.url);
+                                    //     }}/>)
+
+                                    props.mainTabs.map(function (T, I) {
+                                        return React.createElement(Tab, { key: T.route.url, className: 'E_MainTabItem', component: 'span'
+                                            // label={T.options.title}
+                                            , label: React.createElement(MainTabHeader, { tab: T, idx: I, activeMainTabIdx: props.activeMainTabIdx, closeMainTab: props.closeMainTab }),
+                                            onClick: function onClick() {
+                                                navigate(T.route.url);
+                                            } });
+                                    })
+                                ),
+                                hideHeader && React.createElement(
+                                    'div',
+                                    { className: 'E_MainTabsSettings' },
+                                    React.createElement(
+                                        Suspense,
+                                        { fallback: React.createElement('span', null) },
+                                        React.createElement(SettingsBtn, { moreMenus: props.config.moreMenus, logoutHandler: props.config.logout, logoutTxt: props.config.logoutTxt, hideHeader: hideHeader, header: props.config.header, $setAuthed: props.$setAuthed, edge: false })
+                                    )
+                                )
+                            )
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'E_MainTabContents' },
+                            props.mainTabs.map(function (T, I) {
+                                return React.createElement(
+                                    'div',
+                                    { key: T.route.url, className: 'E_MainTabContentItem' + (I == props.activeMainTabIdx ? ' E_MainTabContentActive' : '') },
+                                    React.createElement(
+                                        'div',
+                                        null,
+                                        React.createElement(
+                                            NotFound,
+                                            { route: T.route },
+                                            React.createElement(
+                                                Suspense,
+                                                { fallback: React.createElement(
+                                                        'div',
+                                                        null,
+                                                        'Loading.....'
+                                                    ) },
+                                                T.ele
+                                            )
+                                        )
+                                    ),
+                                    React.createElement(TabFooter, { tab: T })
+                                );
+                            })
+                        )
                     )
                 )
-            )
-        ),
-        props.popTabs.map(function (T, I) {
-            return T.target === Targets._right ? React.createElement(
-                Drawer,
-                { key: T.dt,
-                    className: 'E_RightDrawer' + (T.size ? ' ' + T.size : ''),
-                    sx: { zIndex: T.zIndex },
-                    anchor: 'right',
-                    hideBackdrop: I != props.popTabs.filter(function (P) {
-                        return P.opened;
-                    }).length - 1
-                    // open={openedRightTabs[T.dt]}
-                    , open: props.openedPopTabs[T.dt],
-                    onClose: function onClose() {
-                        if (T.route.searchParams.__auto__) {
-                            props.closePopTab(T);
+            ),
+            props.popTabs.map(function (T, I) {
+                return T.target === Targets._right ? React.createElement(
+                    Drawer,
+                    { key: T.dt,
+                        className: 'E_RightDrawer' + (T.size ? ' ' + T.size : ''),
+                        sx: { zIndex: T.zIndex },
+                        anchor: 'right',
+                        hideBackdrop: I != props.popTabs.filter(function (P) {
+                            return P.opened;
+                        }).length - 1
+                        // open={openedRightTabs[T.dt]}
+                        , open: props.openedPopTabs[T.dt],
+                        onClose: function onClose() {
+                            if (T.route.searchParams.__auto__) {
+                                props.closePopTab(T);
+                            }
                         }
-                    }
-                },
-                React.createElement(
-                    ThemeAppbar,
-                    { position: 'static', config: props.config },
-                    React.createElement(RightTabHeader, { tab: T, closeRightTab: props.closePopTab })
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'E_RightDrawerContent' },
+                    },
+                    React.createElement(
+                        ThemeAppbar,
+                        { position: 'static', config: props.config },
+                        React.createElement(RightTabHeader, { tab: T, closeRightTab: props.closePopTab })
+                    ),
                     React.createElement(
                         'div',
-                        null,
+                        { className: 'E_RightDrawerContent' },
                         React.createElement(
                             'div',
                             null,
                             React.createElement(
-                                NotFound,
-                                { route: T.route },
+                                'div',
+                                null,
                                 React.createElement(
-                                    Suspense,
-                                    { fallback: React.createElement(
-                                            'div',
-                                            null,
-                                            'Loading.....'
-                                        ) },
-                                    T.ele
+                                    NotFound,
+                                    { route: T.route },
+                                    React.createElement(
+                                        Suspense,
+                                        { fallback: React.createElement(
+                                                'div',
+                                                null,
+                                                'Loading.....'
+                                            ) },
+                                        T.ele
+                                    )
                                 )
-                            )
-                        ),
-                        React.createElement(TabFooter, { tab: T })
-                    )
-                ),
-                React.createElement('div', null)
-            ) : React.createElement(DialogTab, { key: T.dt, tab: T, color: props.config && props.config.color, open: !!props.openedPopTabs[T.dt], close: props.closePopTab, hideBackdrop: I != props.popTabs.filter(function (P) {
-                    return P.opened;
-                }).length - 1 });
-        })
+                            ),
+                            React.createElement(TabFooter, { tab: T })
+                        )
+                    ),
+                    React.createElement('div', null)
+                ) : React.createElement(DialogTab, { key: T.dt, tab: T, color: props.config && props.config.color, open: !!props.openedPopTabs[T.dt], close: props.closePopTab, hideBackdrop: I != props.popTabs.filter(function (P) {
+                        return P.opened;
+                    }).length - 1 });
+            })
+        )
     );
 };
 
